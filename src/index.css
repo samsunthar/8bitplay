@@ -1,68 +1,147 @@
+/* 8-bit Global Base Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* 8-bit Color Palette */
+  --retro-green: #00ff00;
+  --retro-dark-green: #008000;
+  --retro-black: #000000;
+  --retro-yellow: #ffff00;
+  --retro-magenta: #ff00ff;
+  --retro-cyan: #00ffff;
+  --retro-white: #ffffff;
+  
+  /* Disable modern font rendering for pixelated look */
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: normal;
+  
+  /* Remove modern font smoothing */
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-smooth: never;
+  
+  /* Force pixelated rendering */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: pixelated;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
+  width: 100%;
+  height: 100%;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  padding: 0;
+  background: var(--retro-black);
+  color: var(--retro-green);
   font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  overflow: hidden;
+  
+  /* Disable text selection highlighting */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* Remove all default styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: bold;
+  margin: 0;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+  line-height: 1.2;
+}
+
+pre {
+  font-family: inherit;
+  margin: 0;
+  white-space: pre;
+}
+
+/* Disable smooth transitions for authentic retro feel */
+*, *::before, *::after {
+  transition: none !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+/* Re-enable our custom animations */
+@keyframes scanlines {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(2px); }
+}
+
+@keyframes glow {
+  from { text-shadow: 2px 2px 0px #008000, 4px 4px 0px #004000; }
+  to { 
+    text-shadow: 
+      2px 2px 0px #008000, 
+      4px 4px 0px #004000,
+      0 0 10px #00ff00,
+      0 0 20px #00ff00;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes flash {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.7; }
+}
+
+/* Allow our specific animations to work */
+.scanlines {
+  animation: scanlines 0.1s linear infinite !important;
+}
+
+.pixel-text {
+  animation: glow 2s ease-in-out infinite alternate !important;
+}
+
+.cursor {
+  animation: blink 1s infinite !important;
+}
+
+.menu-item:hover {
+  animation: flash 0.5s infinite !important;
+}
+
+/* Custom scrollbar for retro feel */
+::-webkit-scrollbar {
+  width: 8px;
+  background: var(--retro-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--retro-green);
+  border: 1px solid var(--retro-black);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--retro-black);
+}
+
+/* Focus styles */
+*:focus {
+  outline: 2px solid var(--retro-yellow);
+  outline-offset: 2px;
 }
